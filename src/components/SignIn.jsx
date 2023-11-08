@@ -6,6 +6,7 @@ import Logo from "../assets/svg/logo/ACCAlogo.svg";
 import { Navigate } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "../auth/AuthProvider";
+import { BACKEND_URL } from "../env/env";
 
 const SignIn = () => {
 
@@ -13,8 +14,22 @@ const SignIn = () => {
     const [password, setPassword] = useState("");
     const auth = useAuth();
 
+    async function handleSubmit(e) {
+        e.preventDefault();
+        try {
+            const response = await fetch(`${BACKEND_URL}Login`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email, password }),
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     if (auth.isAuth) {
-        debugger
         return <Navigate to="/welcome" />;
     }
 
@@ -54,7 +69,8 @@ const SignIn = () => {
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                         </form>
-                        <Button className="w-[163px] h-[50px] bg-pink-600 rounded-[56px] text-center text-white text-[15px] font-normal font-">
+                        { error && <div className="text-red-500 text-sm font-semibold font-Inter">{error}</div> }
+                        <Button onClick={ handleSubmit } className="w-[163px] h-[50px] bg-pink-600 rounded-[56px] text-center text-white text-[15px] font-normal font-">
                             Ingresar
                         </Button>
                     </div>

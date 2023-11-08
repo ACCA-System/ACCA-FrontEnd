@@ -10,6 +10,7 @@ import { AuthProvider } from "./auth/AuthProvider";
 import { createBrowserRouter } from "react-router-dom";
 import { RouterProvider } from "react-router-dom";
 import ProtectedRoutes from "./pages/ProtectedRoutes";
+import { Footer } from "./components/Footer";
 
 const router = createBrowserRouter([
     { path: "/", element: <LoginPage /> },
@@ -28,9 +29,10 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
         <AuthProvider>
             <ThemeProvider>
-                <div className="bg-pink-500 h-screen ">
+                <div className="bg-pink-500 md:pb-10">
                     <RouterProvider router={router} />
                 </div>
+                <Footer />
             </ThemeProvider>
         </AuthProvider>
     </React.StrictMode>

@@ -2,67 +2,89 @@ import React from "react";
 import {
     ArrowLeftIcon,
     ArrowRightIcon,
+    PencilIcon,
     PlusIcon,
+    TrashIcon,
 } from "@heroicons/react/24/outline";
+import { useState } from "react";
 
 const UsersTable = () => {
+    const users = [{
+        name: "Juan Perez",
+        email: "juan",
+        position: "Director",
+        image: "https://images.unsplash.com/photo-1621574534399-7a7b6d5a2e6d?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8ZGlyZWN0b3J8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80",
+    }];
+    const usersPerPage = 10;
+    const [currentPage, setCurrentPage] = useState(1);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [deleteBtn, setDeleteBtn] = useState(false);
+    const [editBtn, setEditBtn] = useState(false);
 
-    const users = [
-        {
-          name: 'Elena Márquez',
-          email: 'elena@example.com',
-          position: 'Desarrollador Frontend',
-          image: 'https://randomuser.me/api/portraits/women/1.jpg',
-        },
-        {
-          name: 'Martín Sánchez',
-          email: 'martin@example.com',
-          position: 'Diseñador UX',
-          image: 'https://randomuser.me/api/portraits/men/2.jpg',
-        },
-        {
-          name: 'Lucía Gutiérrez',
-          email: 'lucia@example.com',
-          position: 'Ingeniero de Software',
-          image: 'https://randomuser.me/api/portraits/women/3.jpg',
-        },
-        {
-          name: 'Javier Torres',
-          email: 'javier@example.com',
-          position: 'Analista de Datos',
-          image: 'https://randomuser.me/api/portraits/men/4.jpg',
-        },
-        {
-          name: 'Sofía López',
-          email: 'sofia@example.com',
-          position: 'Especialista en Marketing Digital',
-          image: 'https://randomuser.me/api/portraits/women/5.jpg',
-        },
-        {
-          name: 'Alejandro Rodríguez',
-          email: 'alejandro@example.com',
-          position: 'Ingeniero de Redes',
-          image: 'https://randomuser.me/api/portraits/men/6.jpg',
-        },
-        {
-          name: 'Valentina García',
-          email: 'valentina@example.com',
-          position: 'Desarrollador Full Stack',
-          image: 'https://randomuser.me/api/portraits/women/7.jpg',
-        },
-      ];
-      
+    const indexOfLastUser = currentPage * usersPerPage;
+    const indexOfFirstUser = indexOfLastUser - usersPerPage;
+
+    let filteredUsers = users;
+    if (searchTerm) {
+        filteredUsers = users.filter(
+            (user) =>
+                user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                user.position.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+    }
+
+    const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
+
+    const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
+
+    const nextPage = () => {
+        setCurrentPage((prevPage) =>
+            prevPage === totalPages ? prevPage : prevPage + 1
+        );
+    };
+
+    const prevPage = () => {
+        setCurrentPage((prevPage) =>
+            prevPage === 1 ? prevPage : prevPage - 1
+        );
+    };
+
+    const handleSearch = (e) => {
+        setSearchTerm(e.target.value);
+        setCurrentPage(1);
+    };
+
+    const handleDelete = () => {
+        setDeleteBtn(!deleteBtn);
+        setEditBtn(false);
+    };
+
+    const handleEdit = () => {
+        setEditBtn(!editBtn);
+        setDeleteBtn(false);
+    };
+
+    const maxPagesToShow = 5;
+    const delta = Math.floor(maxPagesToShow / 2);
+    const leftBound = Math.max(1, currentPage - delta);
+    const rightBound = Math.min(totalPages, leftBound + maxPagesToShow - 1);
+
+    const pageNumbers = [];
+    for (let i = leftBound; i <= rightBound; i++) {
+        pageNumbers.push(i);
+    }
 
     return (
-        <div className="flex items-center justify-center h-screen md:w-[90%] md:h-4/5 md:m-[5%] bg-gray-200 bg-opacity-80 shadow-md md:rounded-lg">
-            <div className="bg-opacity-80 bg-white p-8 rounded-md w-full h-full">
+        <div className="flex items-center justify-center  md:w-[90%] md:m-[5%] bg-gray-200 bg-opacity-80 shadow-md md:rounded-lg">
+            { users.length === 0 ? (<div className="items-center text-2xl h-screen"> No se encontraron usuarios </div>) : (<div className="bg-opacity-80 bg-white p-8 rounded-md w-full h-full">
                 <div className=" flex flex-col md:flex-row items-center justify-between pb-6">
                     <div>
                         <h2 className="text-gray-600 font-semibold">
                             Personal
                         </h2>
                     </div>
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-col md:flex-row items-center justify-between">
                         <div className="flex items-center p-2 rounded-md">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -79,21 +101,52 @@ const UsersTable = () => {
                             <input
                                 className="outline-none ml-1 block border-none bg-gray-200 rounded-3xl text-gray-500 "
                                 type="text"
-                                name=""
-                                id=""
+                                value={searchTerm}
+                                onChange={handleSearch}
                                 placeholder="Buscar..."
                             />
                         </div>
-                        <div className="lg:ml-40 ml-10 space-x-8">
-                            <button className="hover:bg-[#84cc16] bg-[#9EBF43] p-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">
+                        <div className="flex lg:ml-40 md:ml-10 space-x-8">
+                            <button
+                                onClick={handleEdit}
+                                className="group relative overflow-hidden hover:bg-[#ffd966] bg-[#9EBF43] p-2 rounded-md text-white font-semibold tracking-wide cursor-pointer transition-all duration-300"
+                            >
                                 <svg
-                                    className="w-6 h-6 inline-block"
+                                    className="w-6 h-6 inline-block z-10 relative"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <PencilIcon />
+                                </svg>
+                                <span className="absolute z-0 w-6 h-6 bg-[#ffd966] rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 scale-0 origin-center transition-all duration-300 group-hover:scale-100"></span>
+                            </button>
+
+                            <button
+                                onClick={handleDelete}
+                                className="group relative overflow-hidden hover:bg-[#f44336] bg-[#9EBF43] p-2 rounded-md text-white font-semibold tracking-wide cursor-pointer transition-all duration-300"
+                            >
+                                <svg
+                                    className="w-6 h-6 inline-block z-10 relative"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <TrashIcon />
+                                </svg>
+                                <span className="absolute z-0 w-6 h-6 bg-[#f44336] rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 scale-0 origin-center transition-all duration-300 group-hover:scale-100"></span>
+                            </button>
+
+                            <button className="group relative overflow-hidden hover:bg-[#84cc16] bg-[#9EBF43] p-2 rounded-md text-white font-semibold tracking-wide cursor-pointer transition-all duration-300">
+                                <svg
+                                    className="w-6 h-6 inline-block z-10 relative"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
                                 >
                                     <PlusIcon />
                                 </svg>
+                                <span className="absolute z-0 w-6 h-6 bg-[#84cc16] rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 scale-0 origin-center transition-all duration-300 group-hover:scale-100"></span>
                             </button>
                         </div>
                     </div>
@@ -113,79 +166,222 @@ const UsersTable = () => {
                                         <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                             Puesto
                                         </th>
+                                        {deleteBtn ? (
+                                            <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Eliminar
+                                            </th>
+                                        ) : null}
+                                        {editBtn ? (
+                                            <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Editar
+                                            </th>
+                                        ) : null}
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {users.map((users) => (
-                                                                            <tr>
-                                                                            <td className="px-5 py-5 bg-white text-sm">
-                                                                                <div className="flex items-center">
-                                                                                    <div className="flex-shrink-0 w-10 h-10">
-                                                                                        <img
-                                                                                            className="w-full h-full rounded-full"
-                                                                                            src={users.image}
-                                                                                            alt=""
-                                                                                        />
-                                                                                    </div>
-                                                                                    <div className="ml-3">
-                                                                                        <p className="text-gray-900 whitespace-no-wrap">
-                                                                                            {users.name}
-                                                                                        </p>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </td>
-                                                                            <td className="px-5 py-5 bg-white text-sm">
-                                                                                <p className="text-gray-900 whitespace-no-wrap">
-                                                                                    {users.email}
-                                                                                </p>
-                                                                            </td>
-                                                                            <td className="px-5 py-5 bg-white text-sm">
-                                                                                <span className="relative inline-block px-3 py-1 font-semibold text-yellow-900 leading-tight">
-                                                                                    <span
-                                                                                        aria-hidden
-                                                                                        className="absolute inset-0 bg-yellow-200 opacity-50 rounded-full"
-                                                                                    ></span>
-                                                                                    <span className="relative">
-                                                                                        {users.position}
-                                                                                    </span>
-                                                                                </span>
-                                                                            </td>
-                                                                        </tr>
+                                    {currentUsers.map((users, index) => (
+                                        <tr key={index}>
+                                            <td className="px-5 py-5 bg-white text-sm">
+                                                <div className="flex items-center">
+                                                    <div className="flex-shrink-0 w-10 h-10">
+                                                        <img
+                                                            className="w-full h-full rounded-full"
+                                                            src={users.image}
+                                                            alt=""
+                                                        />
+                                                    </div>
+                                                    <div className="ml-3">
+                                                        <p className="text-gray-900 whitespace-no-wrap">
+                                                            {users.name}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td className="px-5 py-5 bg-white text-sm">
+                                                <p className="text-gray-900 whitespace-no-wrap">
+                                                    {users.email}
+                                                </p>
+                                            </td>
+                                            <td className="px-5 py-5 bg-white text-sm">
+                                                {users.position ===
+                                                "Director" ? (
+                                                    <span className="relative inline-block px-3 py-1 font-semibold text-blue-900 leading-tight">
+                                                        <span
+                                                            aria-hidden
+                                                            className="absolute inset-0 bg-blue-200 opacity-50 rounded-full"
+                                                        ></span>
+                                                        <span className="relative">
+                                                            {users.position}
+                                                        </span>
+                                                    </span>
+                                                ) : users.position ===
+                                                  "Donaciones" ? (
+                                                    <span className="relative inline-block px-3 py-1 font-semibold text-yellow-900 leading-tight">
+                                                        <span
+                                                            aria-hidden
+                                                            className="absolute inset-0 bg-yellow-200 opacity-50 rounded-full"
+                                                        ></span>
+                                                        <span className="relative">
+                                                            {users.position}
+                                                        </span>
+                                                    </span>
+                                                ) : users.position ===
+                                                  "Administrador" ? (
+                                                    <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                                                        <span
+                                                            aria-hidden
+                                                            className="absolute inset-0 bg-green-200 opacity-50 rounded-full"
+                                                        ></span>
+                                                        <span className="relative">
+                                                            {users.position}
+                                                        </span>
+                                                    </span>
+                                                ) : users.position ===
+                                                  "Secretaria(o)" ? (
+                                                    <span className="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
+                                                        <span
+                                                            aria-hidden
+                                                            className="absolute inset-0 bg-red-200 opacity-50 rounded-full"
+                                                        ></span>
+                                                        <span className="relative">
+                                                            {users.position}
+                                                        </span>
+                                                    </span>
+                                                ) : null}
+                                                {}
+                                            </td>
+                                            {deleteBtn ? (
+                                                <td className="px-5 py-5 bg-white text-sm">
+                                                    <div className="flex items-center">
+                                                        <button className="group relative cursor-pointer rounded-lg transition duration-300 ease-in-out hover:bg-gray-200 py-1 px-3 text-base">
+                                                            <svg
+                                                                className="w-6 h-6 inline-block z-10 relative text-red-500"
+                                                                fill="none"
+                                                                viewBox="0 0 24 24"
+                                                                stroke="currentColor"
+                                                            >
+                                                                <TrashIcon />
+                                                            </svg>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            ) : null}
+                                            {editBtn ? (
+                                                <td className="px-5 py-5 bg-white text-sm">
+                                                    <div className="flex items-center">
+                                                        <button className="group relative cursor-pointer rounded-lg transition duration-300 ease-in-out hover:bg-gray-200 py-1 px-3 text-base">
+                                                            <svg
+                                                                className="w-6 h-6 inline-block z-10 relative text-yellow-500"
+                                                                fill="none"
+                                                                viewBox="0 0 24 24"
+                                                                stroke="currentColor"
+                                                            >
+                                                                <PencilIcon />
+                                                            </svg>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            ) : null}
+                                        </tr>
                                     ))}
-                                    </tbody>
+                                </tbody>
                             </table>
-                            <div className="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between          ">
-                                <span className="text-xs xs:text-sm text-gray-900">
-                                    1 a 4 de 50 Empleados
-                                </span>
-                                <div className="inline-flex mt-2 xs:mt-0">
-                                    <button className="text-sm text-indigo-50 transition duration-150 hover:bg-[#84cc16] bg-[#9EBF43] font-semibold py-2 px-4 rounded-l">
-                                        <svg
-                                            className="w-6 h-6 inline-block"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
+                            {users.length < 9 && (
+                                <div className="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between          ">
+                                    <div className="py-4 bg-white flex items-center justify-center space-x-2">
+                                        {currentPage > delta + 1 && (
+                                            <button
+                                                className="bg-white text-gray-700 font-semibold py-2 px-4 border rounded-full transition duration-300 hover:bg-gray-200"
+                                                onClick={() =>
+                                                    setCurrentPage(1)
+                                                }
+                                            >
+                                                1
+                                            </button>
+                                        )}
+                                        {currentPage > delta + 2 && (
+                                            <span className="text-gray-600">
+                                                ...
+                                            </span>
+                                        )}
+                                        {pageNumbers.map((number) => (
+                                            <button
+                                                key={number}
+                                                className={`bg-white text-gray-700 font-semibold py-2 px-4 border rounded-full transition duration-300 hover:bg-gray-200 ${
+                                                    currentPage === number
+                                                        ? "text-white bg-[#9EBF44] hover:bg-[#84cc17]"
+                                                        : ""
+                                                }`}
+                                                onClick={() =>
+                                                    setCurrentPage(number)
+                                                }
+                                            >
+                                                {number}
+                                            </button>
+                                        ))}
+                                        {currentPage < totalPages - delta && (
+                                            <span className="text-green-600">
+                                                ...
+                                            </span>
+                                        )}
+
+                                        {currentPage < totalPages - delta && (
+                                            <button
+                                                className="bg-white text-gray-700 font-semibold py-2 px-4 border rounded-full transition duration-300 hover:bg-gray-200"
+                                                onClick={() =>
+                                                    setCurrentPage(totalPages)
+                                                }
+                                            >
+                                                {totalPages}
+                                            </button>
+                                        )}
+                                    </div>
+                                    <span className="text-xs xs:text-sm text-gray-900">
+                                        {`Mostrando ${
+                                            indexOfFirstUser + 1
+                                        } a ${indexOfLastUser} de ${
+                                            users.length
+                                        } Empleados`}
+                                    </span>
+                                    <div className=" inline-flex mt-2 xs:mt-0">
+                                        <button
+                                            onClick={prevPage}
+                                            disabled={currentPage === 1}
+                                            className="text-sm text-indigo-50 transition duration-150 hover:bg-[#84cc16] bg-[#9EBF43] font-semibold py-2 px-4 rounded-l "
                                         >
-                                            <ArrowLeftIcon />
-                                        </svg>
-                                    </button>
-                                    &nbsp; &nbsp;
-                                    <button className="text-sm text-indigo-50 transition duration-150 hover:bg-[#84cc16] bg-[#9EBF43] font-semibold py-2 px-4 rounded-r">
-                                        <svg
-                                            className="w-6 h-6 inline-block"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
+                                            <svg
+                                                className="w-6 h-6 inline-block"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                stroke="currentColor"
+                                            >
+                                                <ArrowLeftIcon />
+                                            </svg>
+                                        </button>
+                                        &nbsp; &nbsp;
+                                        <button
+                                            onClick={nextPage}
+                                            disabled={
+                                                currentPage === totalPages
+                                            }
+                                            className="text-sm text-indigo-50 transition duration-150 hover:bg-[#84cc16] bg-[#9EBF43] font-semibold py-2 px-4 rounded-r cursor-pointer"
                                         >
-                                            <ArrowRightIcon />
-                                        </svg>
-                                    </button>
+                                            <svg
+                                                className="w-6 h-6 inline-block"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                stroke="currentColor"
+                                            >
+                                                <ArrowRightIcon />
+                                            </svg>
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
+                            )}
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>)}
         </div>
     );
 };
