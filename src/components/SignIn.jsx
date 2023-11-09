@@ -69,7 +69,6 @@ const SignIn = () => {
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                         </form>
-                        { error && <div className="text-red-500 text-sm font-semibold font-Inter">{error}</div> }
                         <Button onClick={ handleSubmit } className="w-[163px] h-[50px] bg-pink-600 rounded-[56px] text-center text-white text-[15px] font-normal font-">
                             Ingresar
                         </Button>

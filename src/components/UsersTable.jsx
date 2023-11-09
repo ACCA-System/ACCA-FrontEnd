@@ -9,12 +9,261 @@ import {
 import { useState } from "react";
 
 const UsersTable = () => {
-    const users = [{
-        name: "Juan Perez",
-        email: "juan",
-        position: "Director",
-        image: "https://images.unsplash.com/photo-1621574534399-7a7b6d5a2e6d?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8ZGlyZWN0b3J8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80",
-    }];
+    const users = [
+        {
+            name: "Sophie Adams",
+            email: "sophie.adams@example.com",
+            position: "Director",
+            image: "https://randomuser.me/api/portraits/women/17.jpg",
+        },
+        {
+            name: "Liam Brown",
+            email: "liam.brown@example.com",
+            position: "Donaciones",
+            image: "https://randomuser.me/api/portraits/men/18.jpg",
+        },
+        {
+            name: "Ava Campbell",
+            email: "ava.campbell@example.com",
+            position: "Administrador",
+            image: "https://randomuser.me/api/portraits/women/19.jpg",
+        },
+        {
+            name: "Noah Clark",
+            email: "noah.clark@example.com",
+            position: "Secretaria(o)",
+            image: "https://randomuser.me/api/portraits/men/20.jpg",
+        },
+        {
+            name: "Mia Davis",
+            email: "mia.davis@example.com",
+            position: "Donaciones",
+            image: "https://randomuser.me/api/portraits/women/21.jpg",
+        },
+        {
+            name: "James Edwards",
+            email: "james.edwards@example.com",
+            position: "Administrador",
+            image: "https://randomuser.me/api/portraits/men/22.jpg",
+        },
+        {
+            name: "Emily Foster",
+            email: "emily.foster@example.com",
+            position: "Secretaria(o)",
+            image: "https://randomuser.me/api/portraits/women/23.jpg",
+        },
+        {
+            name: "Oliver Green",
+            email: "oliver.green@example.com",
+            position: "Donaciones",
+            image: "https://randomuser.me/api/portraits/men/24.jpg",
+        },
+        {
+            name: "Amelia Hill",
+            email: "amelia.hill@example.com",
+            position: "Administrador",
+            image: "https://randomuser.me/api/portraits/women/25.jpg",
+        },
+        {
+            name: "William Hughes",
+            email: "william.hughes@example.com",
+            position: "Secretaria(o)",
+            image: "https://randomuser.me/api/portraits/men/26.jpg",
+        },
+        {
+            name: "Sofia Jenkins",
+            email: "sofia.jenkins@example.com",
+            position: "Donaciones",
+            image: "https://randomuser.me/api/portraits/women/27.jpg",
+        },
+        {
+            name: "Benjamin King",
+            email: "benjamin.king@example.com",
+            position: "Administrador",
+            image: "https://randomuser.me/api/portraits/men/28.jpg",
+        },
+        {
+            name: "Ella Lopez",
+            email: "ella.lopez@example.com",
+            position: "Secretaria(o)",
+            image: "https://randomuser.me/api/portraits/women/29.jpg",
+        },
+        {
+            name: "Lucas Mitchell",
+            email: "lucas.mitchell@example.com",
+            position: "Donaciones",
+            image: "https://randomuser.me/api/portraits/men/30.jpg",
+        },
+        {
+            name: "Scarlett Nelson",
+            email: "scarlett.nelson@example.com",
+            position: "Administrador",
+            image: "https://randomuser.me/api/portraits/women/31.jpg",
+        },
+        {
+            name: "Aiden O'Connor",
+            email: "aiden.oconnor@example.com",
+            position: "Secretaria(o)",
+            image: "https://randomuser.me/api/portraits/men/32.jpg",
+        },
+        {
+            name: "Chloe Parker",
+            email: "chloe.parker@example.com",
+            position: "Donaciones",
+            image: "https://randomuser.me/api/portraits/women/33.jpg",
+        },
+        {
+            name: "Jackson Quinn",
+            email: "jackson.quinn@example.com",
+            position: "Administrador",
+            image: "https://randomuser.me/api/portraits/men/34.jpg",
+        },
+        {
+            name: "Lily Robinson",
+            email: "lily.robinson@example.com",
+            position: "Secretaria(o)",
+            image: "https://randomuser.me/api/portraits/women/35.jpg",
+        },
+        {
+            name: "Michael Scott",
+            email: "michael.scott@example.com",
+            position: "Donaciones",
+            image: "https://randomuser.me/api/portraits/men/36.jpg",
+        },
+        {
+            name: "Grace Taylor",
+            email: "grace.taylor@example.com",
+            position: "Administrador",
+            image: "https://randomuser.me/api/portraits/women/37.jpg",
+        },
+        {
+            name: "Henry Underwood",
+            email: "henry.underwood@example.com",
+            position: "Secretaria(o)",
+            image: "https://randomuser.me/api/portraits/men/38.jpg",
+        },
+        {
+            name: "Victoria Vaughn",
+            email: "victoria.vaughn@example.com",
+            position: "Donaciones",
+            image: "https://randomuser.me/api/portraits/women/39.jpg",
+        },
+        {
+            name: "Samuel Williams",
+            email: "samuel.williams@example.com",
+            position: "Administrador",
+            image: "https://randomuser.me/api/portraits/men/40.jpg",
+        },
+        {
+            name: "Zoey Young",
+            email: "zoey.young@example.com",
+            position: "Secretaria(o)",
+            image: "https://randomuser.me/api/portraits/women/41.jpg",
+        },
+        {
+            name: "Gabriel Zane",
+            email: "gabriel.zane@example.com",
+            position: "Donaciones",
+            image: "https://randomuser.me/api/portraits/men/42.jpg",
+        },
+        {
+            name: "Natalie Allen",
+            email: "natalie.allen@example.com",
+            position: "Administrador",
+            image: "https://randomuser.me/api/portraits/women/43.jpg",
+        },
+        {
+            name: "Julian Baker",
+            email: "julian.baker@example.com",
+            position: "Secretaria(o)",
+            image: "https://randomuser.me/api/portraits/men/44.jpg",
+        },
+        {
+            name: "Isabella Cooper",
+            email: "isabella.cooper@example.com",
+            position: "Donaciones",
+            image: "https://randomuser.me/api/portraits/women/45.jpg",
+        },
+        {
+            name: "Christopher Diaz",
+            email: "christopher.diaz@example.com",
+            position: "Administrador",
+            image: "https://randomuser.me/api/portraits/men/46.jpg",
+        },
+        {
+            name: "Madison Evans",
+            email: "madison.evans@example.com",
+            position: "Secretaria(o)",
+            image: "https://randomuser.me/api/portraits/women/47.jpg",
+        },
+        {
+            name: "Andrew Fisher",
+            email: "andrew.fisher@example.com",
+            position: "Donaciones",
+            image: "https://randomuser.me/api/portraits/men/48.jpg",
+        },
+        {
+            name: "Aubrey Gray",
+            email: "aubrey.gray@example.com",
+            position: "Administrador",
+            image: "https://randomuser.me/api/portraits/women/49.jpg",
+        },
+        {
+            name: "David Harris",
+            email: "david.harris@example.com",
+            position: "Secretaria(o)",
+            image: "https://randomuser.me/api/portraits/men/50.jpg",
+        },
+        {
+            name: "Brooklyn Ingram",
+            email: "brooklyn.ingram@example.com",
+            position: "Donaciones",
+            image: "https://randomuser.me/api/portraits/women/51.jpg",
+        },
+        {
+            name: "Jack Johnson",
+            email: "jack.johnson@example.com",
+            position: "Administrador",
+            image: "https://randomuser.me/api/portraits/men/52.jpg",
+        },
+        {
+            name: "Aaliyah King",
+            email: "aaliyah.king@example.com",
+            position: "Secretaria(o)",
+            image: "https://randomuser.me/api/portraits/women/53.jpg",
+        },
+        {
+            name: "Christian Lee",
+            email: "christian.lee@example.com",
+            position: "Donaciones",
+            image: "https://randomuser.me/api/portraits/men/54.jpg",
+        },
+        {
+            name: "Avery Martin",
+            email: "avery.martin@example.com",
+            position: "Administrador",
+            image: "https://randomuser.me/api/portraits/women/55.jpg",
+        },
+        {
+            name: "Isaac Martinez",
+            email: "isaac.martinez@example.com",
+            position: "Secretaria(o)",
+            image: "https://randomuser.me/api/portraits/men/56.jpg",
+        },
+        {
+            name: "Hannah Miller",
+            email: "hannah.miller@example.com",
+            position: "Donaciones",
+            image: "https://randomuser.me/api/portraits/women/57.jpg",
+        },
+        {
+            name: "Luke Nelson",
+            email: "luke.nelson@example.com",
+            position: "Administrador",
+            image: "https://randomuser.me/api/portraits/men/58.jpg",
+        },
+    ];
+
     const usersPerPage = 10;
     const [currentPage, setCurrentPage] = useState(1);
     const [searchTerm, setSearchTerm] = useState("");
@@ -286,7 +535,7 @@ const UsersTable = () => {
                                     ))}
                                 </tbody>
                             </table>
-                            {users.length < 9 && (
+                            {users.length > 9 && (
                                 <div className="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between          ">
                                     <div className="py-4 bg-white flex items-center justify-center space-x-2">
                                         {currentPage > delta + 1 && (
@@ -309,7 +558,7 @@ const UsersTable = () => {
                                                 key={number}
                                                 className={`bg-white text-gray-700 font-semibold py-2 px-4 border rounded-full transition duration-300 hover:bg-gray-200 ${
                                                     currentPage === number
-                                                        ? "text-white bg-[#9EBF44] hover:bg-[#84cc17]"
+                                                        ? "text-white bg-[#9EBF45] hover:bg-[#84cc17]"
                                                         : ""
                                                 }`}
                                                 onClick={() =>
