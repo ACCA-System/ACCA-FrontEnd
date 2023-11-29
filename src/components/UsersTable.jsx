@@ -325,7 +325,7 @@ const UsersTable = () => {
     }
 
     return (
-        <div className="flex items-center justify-center  md:w-[90%] md:m-[5%] bg-gray-200 bg-opacity-80 shadow-md md:rounded-lg">
+        <div className="flex items-center justify-center  md:w-[97%] md:m-[1.5%] bg-gray-200 bg-opacity-80 shadow-md md:rounded-lg">
             { users.length === 0 ? (<div className="items-center text-2xl h-screen"> No se encontraron usuarios </div>) : (<div className="bg-opacity-80 bg-white p-8 rounded-md w-full h-full">
                 <div className=" flex flex-col md:flex-row items-center justify-between pb-6">
                     <div>

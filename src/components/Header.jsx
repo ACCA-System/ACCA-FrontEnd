@@ -16,15 +16,15 @@ const Header = () => {
   }
 
   return (
-    <Disclosure as="nav" className="bg-white md:h-20 flex justify-center items-center">
+    <Disclosure as="nav" className="bg-white md:h-24 flex justify-center items-center">
       {({ open }) => (
         <>
-          <div className="max-w-7xl px-2 sm:px-6 lg:px-8 w-full">
-            <div className="relative flex h-16 items-center justify-between w-full">
+          <div className="px-2 w-full">
+            <div className="relative flex h-16 items-center justify-between">
               <div className="flex items-center justify-center">
                 <div className="flex items-center">
                   <img
-                    className="h-[80px] w-auto md:ml-20 mt-3"
+                    className="h-20 md:h-28 w-auto md:ml-20 mt-3"
                     src={ACCAIcon}
                     alt="ACCA"
                   />
@@ -36,7 +36,7 @@ const Header = () => {
                     <Menu.Button className="flex rounded-full bg-gray-400 text-sm focus:outline-none focus:ring-2  focus:ring-black focus:ring-offset-2 focus:ring-offset-gray-100">
                       <span className="sr-only">Open user menu</span>
                       <img
-                        className="h-8 w-8 rounded-full"
+                        className="h-10 md:h-12 md:w-12 rounded-full"
                         src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                         alt=""
                       />

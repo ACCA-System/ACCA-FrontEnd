@@ -6,7 +6,7 @@ import { LoginPage } from "./pages/LoginPage";
 import { WelcomePage } from "./pages/WelcomePage";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import { UsersTablePage } from "./pages/UsersTablePage";
-import { AuthProvider } from "./auth/AuthProvider";
+import { AuthProvider } from "./services/AuthProvider";
 import { createBrowserRouter } from "react-router-dom";
 import { RouterProvider } from "react-router-dom";
 import ProtectedRoutes from "./pages/ProtectedRoutes";
@@ -29,7 +29,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
         <AuthProvider>
             <ThemeProvider>
-                <div className="bg-pink-500 md:pb-10">
+                <div className="bg-pink-500">
                     <RouterProvider router={router} />
                 </div>
                 <Footer />
