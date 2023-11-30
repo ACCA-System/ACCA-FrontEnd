@@ -269,6 +269,7 @@ const UsersTable = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [deleteBtn, setDeleteBtn] = useState(false);
     const [editBtn, setEditBtn] = useState(false);
+    const [showModal, setShowModal] = useState(false);
 
     const indexOfLastUser = currentPage * usersPerPage;
     const indexOfFirstUser = indexOfLastUser - usersPerPage;
@@ -502,7 +503,7 @@ const UsersTable = () => {
                                             {deleteBtn ? (
                                                 <td className="px-5 py-5 bg-white text-sm">
                                                     <div className="flex items-center">
-                                                        <button className="group relative cursor-pointer rounded-lg transition duration-300 ease-in-out hover:bg-gray-200 py-1 px-3 text-base">
+                                                        <button onClick={showModal()} className="group relative cursor-pointer rounded-lg transition duration-300 ease-in-out hover:bg-gray-200 py-1 px-3 text-base">
                                                             <svg
                                                                 className="w-6 h-6 inline-block z-10 relative text-red-500"
                                                                 fill="none"
