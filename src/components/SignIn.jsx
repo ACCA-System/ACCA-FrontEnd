@@ -12,10 +12,6 @@ const SignIn = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const auth = useAuth();
-
-    
-
-
     return (
         <section className="bg-gray-10  flex items-center justify-center h-[80%] md:h-screen">
             <div className="flex items-center lg:h-[75%] lg:w-[85%] bg-gradient-to-b from-pink-500 to-yellow-200 bg-opacity-60 shadow-md md:flex-row">
