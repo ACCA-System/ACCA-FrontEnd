@@ -1,1 +1,1 @@
-export const BACKEND_URL = 'http://localhost:7200/';
+export const BACKEND_URL = 'http://emiliano41-001-site1.htempurl.com';

@@ -1,268 +1,16 @@
 import React from "react";
 import {
-    ArrowLeftIcon,
-    ArrowRightIcon,
-    PencilIcon,
-    PlusIcon,
-    TrashIcon,
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  PencilIcon,
+  PlusIcon,
+  TrashIcon,
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
+import useACCA from "../hooks/useACCA";
 
 const UsersTable = () => {
-    const users = [
-        {
-            name: "Sophie Adams",
-            email: "sophie.adams@example.com",
-            position: "Director",
-            image: "https://randomuser.me/api/portraits/women/17.jpg",
-        },
-        {
-            name: "Liam Brown",
-            email: "liam.brown@example.com",
-            position: "Donaciones",
-            image: "https://randomuser.me/api/portraits/men/18.jpg",
-        },
-        {
-            name: "Ava Campbell",
-            email: "ava.campbell@example.com",
-            position: "Administrador",
-            image: "https://randomuser.me/api/portraits/women/19.jpg",
-        },
-        {
-            name: "Noah Clark",
-            email: "noah.clark@example.com",
-            position: "Secretaria(o)",
-            image: "https://randomuser.me/api/portraits/men/20.jpg",
-        },
-        {
-            name: "Mia Davis",
-            email: "mia.davis@example.com",
-            position: "Donaciones",
-            image: "https://randomuser.me/api/portraits/women/21.jpg",
-        },
-        {
-            name: "James Edwards",
-            email: "james.edwards@example.com",
-            position: "Administrador",
-            image: "https://randomuser.me/api/portraits/men/22.jpg",
-        },
-        {
-            name: "Emily Foster",
-            email: "emily.foster@example.com",
-            position: "Secretaria(o)",
-            image: "https://randomuser.me/api/portraits/women/23.jpg",
-        },
-        {
-            name: "Oliver Green",
-            email: "oliver.green@example.com",
-            position: "Donaciones",
-            image: "https://randomuser.me/api/portraits/men/24.jpg",
-        },
-        {
-            name: "Amelia Hill",
-            email: "amelia.hill@example.com",
-            position: "Administrador",
-            image: "https://randomuser.me/api/portraits/women/25.jpg",
-        },
-        {
-            name: "William Hughes",
-            email: "william.hughes@example.com",
-            position: "Secretaria(o)",
-            image: "https://randomuser.me/api/portraits/men/26.jpg",
-        },
-        {
-            name: "Sofia Jenkins",
-            email: "sofia.jenkins@example.com",
-            position: "Donaciones",
-            image: "https://randomuser.me/api/portraits/women/27.jpg",
-        },
-        {
-            name: "Benjamin King",
-            email: "benjamin.king@example.com",
-            position: "Administrador",
-            image: "https://randomuser.me/api/portraits/men/28.jpg",
-        },
-        {
-            name: "Ella Lopez",
-            email: "ella.lopez@example.com",
-            position: "Secretaria(o)",
-            image: "https://randomuser.me/api/portraits/women/29.jpg",
-        },
-        {
-            name: "Lucas Mitchell",
-            email: "lucas.mitchell@example.com",
-            position: "Donaciones",
-            image: "https://randomuser.me/api/portraits/men/30.jpg",
-        },
-        {
-            name: "Scarlett Nelson",
-            email: "scarlett.nelson@example.com",
-            position: "Administrador",
-            image: "https://randomuser.me/api/portraits/women/31.jpg",
-        },
-        {
-            name: "Aiden O'Connor",
-            email: "aiden.oconnor@example.com",
-            position: "Secretaria(o)",
-            image: "https://randomuser.me/api/portraits/men/32.jpg",
-        },
-        {
-            name: "Chloe Parker",
-            email: "chloe.parker@example.com",
-            position: "Donaciones",
-            image: "https://randomuser.me/api/portraits/women/33.jpg",
-        },
-        {
-            name: "Jackson Quinn",
-            email: "jackson.quinn@example.com",
-            position: "Administrador",
-            image: "https://randomuser.me/api/portraits/men/34.jpg",
-        },
-        {
-            name: "Lily Robinson",
-            email: "lily.robinson@example.com",
-            position: "Secretaria(o)",
-            image: "https://randomuser.me/api/portraits/women/35.jpg",
-        },
-        {
-            name: "Michael Scott",
-            email: "michael.scott@example.com",
-            position: "Donaciones",
-            image: "https://randomuser.me/api/portraits/men/36.jpg",
-        },
-        {
-            name: "Grace Taylor",
-            email: "grace.taylor@example.com",
-            position: "Administrador",
-            image: "https://randomuser.me/api/portraits/women/37.jpg",
-        },
-        {
-            name: "Henry Underwood",
-            email: "henry.underwood@example.com",
-            position: "Secretaria(o)",
-            image: "https://randomuser.me/api/portraits/men/38.jpg",
-        },
-        {
-            name: "Victoria Vaughn",
-            email: "victoria.vaughn@example.com",
-            position: "Donaciones",
-            image: "https://randomuser.me/api/portraits/women/39.jpg",
-        },
-        {
-            name: "Samuel Williams",
-            email: "samuel.williams@example.com",
-            position: "Administrador",
-            image: "https://randomuser.me/api/portraits/men/40.jpg",
-        },
-        {
-            name: "Zoey Young",
-            email: "zoey.young@example.com",
-            position: "Secretaria(o)",
-            image: "https://randomuser.me/api/portraits/women/41.jpg",
-        },
-        {
-            name: "Gabriel Zane",
-            email: "gabriel.zane@example.com",
-            position: "Donaciones",
-            image: "https://randomuser.me/api/portraits/men/42.jpg",
-        },
-        {
-            name: "Natalie Allen",
-            email: "natalie.allen@example.com",
-            position: "Administrador",
-            image: "https://randomuser.me/api/portraits/women/43.jpg",
-        },
-        {
-            name: "Julian Baker",
-            email: "julian.baker@example.com",
-            position: "Secretaria(o)",
-            image: "https://randomuser.me/api/portraits/men/44.jpg",
-        },
-        {
-            name: "Isabella Cooper",
-            email: "isabella.cooper@example.com",
-            position: "Donaciones",
-            image: "https://randomuser.me/api/portraits/women/45.jpg",
-        },
-        {
-            name: "Christopher Diaz",
-            email: "christopher.diaz@example.com",
-            position: "Administrador",
-            image: "https://randomuser.me/api/portraits/men/46.jpg",
-        },
-        {
-            name: "Madison Evans",
-            email: "madison.evans@example.com",
-            position: "Secretaria(o)",
-            image: "https://randomuser.me/api/portraits/women/47.jpg",
-        },
-        {
-            name: "Andrew Fisher",
-            email: "andrew.fisher@example.com",
-            position: "Donaciones",
-            image: "https://randomuser.me/api/portraits/men/48.jpg",
-        },
-        {
-            name: "Aubrey Gray",
-            email: "aubrey.gray@example.com",
-            position: "Administrador",
-            image: "https://randomuser.me/api/portraits/women/49.jpg",
-        },
-        {
-            name: "David Harris",
-            email: "david.harris@example.com",
-            position: "Secretaria(o)",
-            image: "https://randomuser.me/api/portraits/men/50.jpg",
-        },
-        {
-            name: "Brooklyn Ingram",
-            email: "brooklyn.ingram@example.com",
-            position: "Donaciones",
-            image: "https://randomuser.me/api/portraits/women/51.jpg",
-        },
-        {
-            name: "Jack Johnson",
-            email: "jack.johnson@example.com",
-            position: "Administrador",
-            image: "https://randomuser.me/api/portraits/men/52.jpg",
-        },
-        {
-            name: "Aaliyah King",
-            email: "aaliyah.king@example.com",
-            position: "Secretaria(o)",
-            image: "https://randomuser.me/api/portraits/women/53.jpg",
-        },
-        {
-            name: "Christian Lee",
-            email: "christian.lee@example.com",
-            position: "Donaciones",
-            image: "https://randomuser.me/api/portraits/men/54.jpg",
-        },
-        {
-            name: "Avery Martin",
-            email: "avery.martin@example.com",
-            position: "Administrador",
-            image: "https://randomuser.me/api/portraits/women/55.jpg",
-        },
-        {
-            name: "Isaac Martinez",
-            email: "isaac.martinez@example.com",
-            position: "Secretaria(o)",
-            image: "https://randomuser.me/api/portraits/men/56.jpg",
-        },
-        {
-            name: "Hannah Miller",
-            email: "hannah.miller@example.com",
-            position: "Donaciones",
-            image: "https://randomuser.me/api/portraits/women/57.jpg",
-        },
-        {
-            name: "Luke Nelson",
-            email: "luke.nelson@example.com",
-            position: "Administrador",
-            image: "https://randomuser.me/api/portraits/men/58.jpg",
-        },
-    ];
+    const { users } = useACCA();
 
     const usersPerPage = 10;
     const [currentPage, setCurrentPage] = useState(1);
@@ -280,7 +28,7 @@ const UsersTable = () => {
             (user) =>
                 user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                user.position.toLowerCase().includes(searchTerm.toLowerCase())
+                user.typeId.toLowerCase().includes(searchTerm.toLowerCase())
         );
     }
 
@@ -433,13 +181,6 @@ const UsersTable = () => {
                                         <tr key={index}>
                                             <td className="px-5 py-5 bg-white text-sm">
                                                 <div className="flex items-center">
-                                                    <div className="flex-shrink-0 w-10 h-10">
-                                                        <img
-                                                            className="w-full h-full rounded-full"
-                                                            src={users.image}
-                                                            alt=""
-                                                        />
-                                                    </div>
                                                     <div className="ml-3">
                                                         <p className="text-gray-900 whitespace-no-wrap">
                                                             {users.name}
@@ -453,49 +194,48 @@ const UsersTable = () => {
                                                 </p>
                                             </td>
                                             <td className="px-5 py-5 bg-white text-sm">
-                                                {users.position ===
-                                                "Director" ? (
+                                                {users.typeId ===
+                                                1 ? (
                                                     <span className="relative inline-block px-3 py-1 font-semibold text-blue-900 leading-tight">
                                                         <span
                                                             aria-hidden
                                                             className="absolute inset-0 bg-blue-200 opacity-50 rounded-full"
                                                         ></span>
                                                         <span className="relative">
-                                                            {users.position}
+                                                        Director
                                                         </span>
                                                     </span>
-                                                ) : users.position ===
-                                                  "Donaciones" ? (
+                                                ) : users.typeId ===
+                                                  4 ? (
                                                     <span className="relative inline-block px-3 py-1 font-semibold text-yellow-900 leading-tight">
                                                         <span
                                                             aria-hidden
                                                             className="absolute inset-0 bg-yellow-200 opacity-50 rounded-full"
                                                         ></span>
                                                         <span className="relative">
-                                                            {users.position}
+                                                        Donaciones
                                                         </span>
                                                     </span>
-                                                ) : users.position ===
-                                                  "Administrador" ? (
+                                                ) : users.typeId ===
+                                                  2 ? (
                                                     <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
                                                         <span
                                                             aria-hidden
                                                             className="absolute inset-0 bg-green-200 opacity-50 rounded-full"
                                                         ></span>
                                                         <span className="relative">
-                                                            {users.position}
+                                                        Administrador
                                                         </span>
                                                     </span>
-                                                ) : users.position ===
-                                                  "Secretaria(o)" ? (
+                                                ) : users.typeId ===
+                                                  3 ? (
                                                     <span className="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
                                                         <span
                                                             aria-hidden
                                                             className="absolute inset-0 bg-red-200 opacity-50 rounded-full"
                                                         ></span>
                                                         <span className="relative">
-                                                            {users.position}
-                                                        </span>
+                                                        Secretaria(o)                                                        </span>
                                                     </span>
                                                 ) : null}
                                                 {}
