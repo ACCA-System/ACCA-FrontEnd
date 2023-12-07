@@ -11,6 +11,7 @@ import { BACKEND_URL } from "../env/env";
 const SignIn = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const auth = useAuth();
 
     return (
         <section className="bg-gray-10  flex items-center justify-center h-[80%] md:h-screen">
