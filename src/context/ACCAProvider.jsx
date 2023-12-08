@@ -76,9 +76,7 @@ const ACCAProvider = ({ children }) => {
       const { data } = await clienteAxios.get("/Users", config);
       setUsers(data);
       setAlert({});
-      console.log(data);
     } catch (error) {
-      console.log(error);
     }
   };
 
@@ -104,7 +102,6 @@ const ACCAProvider = ({ children }) => {
         navigate("/Users");
       }, 1000);
     } catch (error) {
-      console.log(error);
     }
   };
   const updateUser = async (user) => {
@@ -126,7 +123,6 @@ const ACCAProvider = ({ children }) => {
         navigate("/Users");
       }, 1000);
     } catch (error) {
-      console.log(error);
     }
   };
 
@@ -146,7 +142,6 @@ const ACCAProvider = ({ children }) => {
         navigate("/Users");
       }, 1000);
     } catch (error) {
-      console.log(error);
     }
   };
 

@@ -26,7 +26,6 @@ const AuthProvider = ({ children }) => {
         Navigate("/welcome");
       } catch (error) {
         setAuth({});
-        console.log(error);
       }
       setLoading(false)
     };
