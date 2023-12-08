@@ -54,9 +54,9 @@ const Header = () => {
                     <Menu.Items className="absolute right-0 z-10 mt-6 w-48 origin-top-right rounded-md bg-[#D9D9D9] py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <Menu.Item>
                         {({active})=>(
-                                <div class="px-4 py-3 text-sm font-semibold text-gray-600">
+                                <div className="px-4 py-3 text-sm font-semibold text-gray-600">
                                 <div>Bonnie Green</div>
-                                <div class="font-semibold truncate">name@flowbite.com</div>
+                                <div className="font-semibold truncate">name@flowbite.com</div>
                               </div>
                         )}
                       </Menu.Item>
@@ -71,7 +71,7 @@ const Header = () => {
                           </a>
                         )}
                       </Menu.Item>
-                      <Menu.Item>
+                      {/* <Menu.Item>
                         {({ active }) => (
                           <a
                             href="#"
@@ -90,7 +90,7 @@ const Header = () => {
                             Donaciones
                           </a>
                         )}
-                      </Menu.Item>
+                      </Menu.Item> */}
                       <Menu.Item>
                         {({ active }) => (
                           <a
