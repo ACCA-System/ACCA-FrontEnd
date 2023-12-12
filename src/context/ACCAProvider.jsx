@@ -3,6 +3,7 @@ import clienteAxios from "../config/clienteAxios";
 import useAuth from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 
+
 const ACCAContext = createContext();
 
 const ACCAProvider = ({ children }) => {
@@ -51,6 +52,7 @@ const ACCAProvider = ({ children }) => {
         setAlert({});
       }, 1000);
     } 
+
   };
   const getUserData = async (id) => {
     try {

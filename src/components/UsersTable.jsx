@@ -1,10 +1,10 @@
 import React from "react";
 import {
-    ArrowLeftIcon,
-    ArrowRightIcon,
-    PencilIcon,
-    PlusIcon,
-    TrashIcon,
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  PencilIcon,
+  PlusIcon,
+  TrashIcon,
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import useACCA from "../hooks/useACCA";
@@ -24,6 +24,7 @@ const UsersTable = () => {
 
     const onClose = () => setOpen(false);
 
+
     const indexOfLastUser = currentPage * usersPerPage;
     const indexOfFirstUser = indexOfLastUser - usersPerPage;
 
@@ -33,6 +34,7 @@ const UsersTable = () => {
             (user) =>
                 user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 user.email.toLowerCase().includes(searchTerm.toLowerCase())
+
         );
     }
 
