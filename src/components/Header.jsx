@@ -1,20 +1,13 @@
 import { Fragment } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import ACCAIcon from '../assets/svg/logo/ACCAlogo.svg';
-import {useNavigate} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
 const Header = () => {
-
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    navigate("/users");
-  }
-
   return (
     <Disclosure as="nav" className="bg-white md:h-24 flex justify-center items-center">
       {({ open }) => (
@@ -63,12 +56,13 @@ const Header = () => {
                       <Menu.Item>
                         
                         {({ active }) => (
-                                                <a
-                            onClick={handleClick}
+                                                <Link
+                            replace={true}
+                            to="/welcome/users"
                             className={classNames(active ? 'bg-[#B4B4B4]' : '', 'block px-4 py-2 text-sm font-semibold text-gray-600')}
                           >
                             Usuarios
-                          </a>
+                          </Link>
                         )}
                       </Menu.Item>
                       {/* <Menu.Item>

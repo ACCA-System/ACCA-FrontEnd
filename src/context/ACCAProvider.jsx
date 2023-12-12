@@ -1,6 +1,8 @@
 import { useState, useEffect, createContext } from "react";
 import clienteAxios from "../config/clienteAxios";
 import useAuth from "../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
+
 
 const ACCAContext = createContext();
 
@@ -9,6 +11,8 @@ const ACCAProvider = ({ children }) => {
   const [users, setUsers] = useState([]);
   const [alerta, setAlert] = useState({});
   const { auth } = useAuth();
+
+  const navigate = useNavigate();
 
   const getConfig = () => {
     const token = localStorage.getItem("token");
@@ -34,11 +38,12 @@ const ACCAProvider = ({ children }) => {
     try {
       const config = getConfig();
       if (!config) return;
-      const { data } = await clienteAxios.get(`/User/?id=${id}`, config);
+      const { data } = await clienteAxios.get(`/User/?userId=${id}`, config);
       setUser(data);
       setAlert({});
+      navigate("/welcome/usersForm");
     } catch (error) {
-      navigate("/welcome");
+      navigate("/welcome/users");
       setAlert({
         msg: error.response.data.msg,
         error: true,
@@ -46,9 +51,8 @@ const ACCAProvider = ({ children }) => {
       setTimeout(() => {
         setAlert({});
       }, 1000);
-    } finally {
-      setLoading(false);
-    }
+    } 
+
   };
   const getUserData = async (id) => {
     try {
@@ -58,7 +62,6 @@ const ACCAProvider = ({ children }) => {
       setUser(data);
       setAlert({});
     } catch (error) {
-      navigate("/welcome");
       setAlert({
         msg: error.response.data.msg,
         error: true,
@@ -99,7 +102,7 @@ const ACCAProvider = ({ children }) => {
       setTimeout(() => {
         setAlert({});
         getUsers();
-        navigate("/Users");
+        navigate("/welcome/users");
       }, 1000);
     } catch (error) {
     }
@@ -126,12 +129,12 @@ const ACCAProvider = ({ children }) => {
     }
   };
 
-  const deleteUser = async (user) => {
+  const deleteUser = async (userId) => {
     try {
       const config = getConfig();
       if (!config) return;
       const { data } = await clienteAxios.delete(
-        `/User/?userId=${user.userId}`, config);
+        `/User/?userId=${userId}`, config);
       setAlert({
         msg: data.msg,
         error: false,
@@ -139,7 +142,6 @@ const ACCAProvider = ({ children }) => {
       setTimeout(() => {
         setAlert({});
         getUsers();
-        navigate("/Users");
       }, 1000);
     } catch (error) {
     }
