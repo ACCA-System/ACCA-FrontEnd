@@ -20,6 +20,7 @@ export default function ModalConfirm({ open, setOpen, values, error }) {
             setOpen(false);
             setButtonsDisabled(false);
         }, 1000);
+
     };
 
     return (

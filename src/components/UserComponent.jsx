@@ -18,6 +18,7 @@ export const UserComponent = () => {
 
     const auth = useACCA();
 
+
     const onClose = () => {
         setOpen(false);
         setErrors({});
@@ -32,7 +33,6 @@ export const UserComponent = () => {
 
     const validateForm = () => {
         const newErrors = {};
-
         if (!values.name) {
             newErrors.name = "Campo requerido";
         }
@@ -223,3 +223,4 @@ export const UserComponent = () => {
         </div>
     );
 };
+

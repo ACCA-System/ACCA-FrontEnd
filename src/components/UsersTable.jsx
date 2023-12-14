@@ -26,6 +26,7 @@ const UsersTable = () => {
 
     const onClose = () => setOpen(false);
 
+
     const indexOfLastUser = currentPage * usersPerPage;
     const indexOfFirstUser = indexOfLastUser - usersPerPage;
 
