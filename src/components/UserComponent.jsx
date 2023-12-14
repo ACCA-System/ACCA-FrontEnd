@@ -4,14 +4,20 @@ import ModalConfirm from "./ModalConfirm";
 
 export const UserComponent = () => {
     const [open, setOpen] = useState(false);
+    const { userToEdit } = useACCA();
+
     const [values, setValues] = useState({
-        name: "",
-        email: "",
-        password: "",
-        TypeId: "",
-        confirmPassword: "",
+        userId: userToEdit.userId,
+        name: userToEdit.name,
+        email: userToEdit.email,
+        password: userToEdit.password,
+        typeId: userToEdit.typeId,
+        confirmPassword: userToEdit.password,
     });
     const [errors, setErrors] = useState({});
+
+    const auth = useACCA();
+
 
     const onClose = () => {
         setOpen(false);
@@ -27,8 +33,6 @@ export const UserComponent = () => {
 
     const validateForm = () => {
         const newErrors = {};
-
-        // Validaciones aquí
         if (!values.name) {
             newErrors.name = "Campo requerido";
         }
@@ -71,7 +75,7 @@ export const UserComponent = () => {
                     <div className="space-y-12">
                         <div className="border-b border-gray-900/10 pb-12">
                             <h2 className="text-base font-semibold leading-7 text-gray-900">
-                                Nuevo Usuario
+                                Gestión de Usuario
                             </h2>
                             <div className="mt-10 grid gap-x-6 gap-y-8 sm:grid-cols-6">
                                 <div className="sm:col-span-3">
@@ -92,7 +96,8 @@ export const UserComponent = () => {
                                                 errors.name
                                                     ? "border-red-500"
                                                     : ""
-                                            }`}                                        />
+                                            }`}
+                                        />
                                     </div>
                                 </div>
                                 <div className="sm:col-span-3">
@@ -130,7 +135,11 @@ export const UserComponent = () => {
                                             value={values.TypeId}
                                             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                                         >
-                                            <option value="1">Director</option>
+                                            {auth.user.typeId == 1 && (
+                                                <option value="1">
+                                                    Director
+                                                </option>
+                                            )}
                                             <option value="2">
                                                 Administrador
                                             </option>
@@ -214,3 +223,4 @@ export const UserComponent = () => {
         </div>
     );
 };
+

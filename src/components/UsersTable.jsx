@@ -1,18 +1,20 @@
 import React from "react";
 import {
-  ArrowLeftIcon,
-  ArrowRightIcon,
-  PencilIcon,
-  PlusIcon,
-  TrashIcon,
+    ArrowLeftIcon,
+    ArrowRightIcon,
+    PencilIcon,
+    PlusIcon,
+    TrashIcon,
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import useACCA from "../hooks/useACCA";
 import ModalDelete from "./ModalDelete";
+import { useNavigate } from "react-router-dom";
 
 const UsersTable = () => {
     const { users, getUser } = useACCA();
-    
+    const { cleanUserToEdit } = useACCA({});
+    const navigate = useNavigate();
 
     const usersPerPage = 10;
     const [currentPage, setCurrentPage] = useState(1);
@@ -28,13 +30,22 @@ const UsersTable = () => {
     const indexOfLastUser = currentPage * usersPerPage;
     const indexOfFirstUser = indexOfLastUser - usersPerPage;
 
+    const roleDictionary = {
+        1: "Director",
+        2: "Administrador",
+        3: "Secretaria(o)",
+        4: "Donaciones",
+    };
+
     let filteredUsers = users;
     if (searchTerm) {
         filteredUsers = users.filter(
             (user) =>
                 user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                user.email.toLowerCase().includes(searchTerm.toLowerCase())
-
+                user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                roleDictionary[user.typeId]
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase())
         );
     }
 
@@ -76,6 +87,11 @@ const UsersTable = () => {
 
     const handleEditUsers = (value) => {
         getUser(value);
+    };
+
+    const handleNewUser = () => {
+        cleanUserToEdit();
+        navigate("/welcome/usersForm");
     };
 
     const maxPagesToShow = 5;
@@ -161,7 +177,10 @@ const UsersTable = () => {
                                     <span className="absolute z-0 w-6 h-6 bg-[#f44336] rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 scale-0 origin-center transition-all duration-300 group-hover:scale-100"></span>
                                 </button>
 
-                                <button className="group relative overflow-hidden hover:bg-[#84cc16] bg-[#9EBF43] p-2 rounded-md text-white font-semibold tracking-wide cursor-pointer transition-all duration-300">
+                                <button
+                                    onClick={handleNewUser}
+                                    className="group relative overflow-hidden hover:bg-[#84cc16] bg-[#9EBF43] p-2 rounded-md text-white font-semibold tracking-wide cursor-pointer transition-all duration-300"
+                                >
                                     <svg
                                         className="w-6 h-6 inline-block z-10 relative"
                                         fill="none"
@@ -292,7 +311,17 @@ const UsersTable = () => {
                                                 {editBtn ? (
                                                     <td className="px-5 py-5 bg-white text-sm">
                                                         <div className="flex items-center">
-                                                            <button value={users.userId} onClick={() => handleEditUsers(users.userId)}  className="group relative cursor-pointer rounded-lg transition duration-300 ease-in-out hover:bg-gray-200 py-1 px-3 text-base">
+                                                            <button
+                                                                value={
+                                                                    users.userId
+                                                                }
+                                                                onClick={() =>
+                                                                    handleEditUsers(
+                                                                        users.userId
+                                                                    )
+                                                                }
+                                                                className="group relative cursor-pointer rounded-lg transition duration-300 ease-in-out hover:bg-gray-200 py-1 px-3 text-base"
+                                                            >
                                                                 <svg
                                                                     className="w-6 h-6 inline-block z-10 relative text-yellow-500"
                                                                     fill="none"
@@ -330,10 +359,10 @@ const UsersTable = () => {
                                             {pageNumbers.map((number) => (
                                                 <button
                                                     key={number}
-                                                    className={`bg-white text-gray-700 font-semibold py-2 px-4 border rounded-full transition duration-300 hover:bg-gray-200 ${
+                                                    className={`text-gray-700 font-semibold py-2 px-4 border rounded-full transition duration-300  ${
                                                         currentPage === number
-                                                            ? "text-white bg-[#9EBF45] hover:bg-[#84cc17]"
-                                                            : ""
+                                                            ? "text-white bg-[#9EBF45] "
+                                                            : "hover:bg-gray-200"
                                                     }`}
                                                     onClick={() =>
                                                         setCurrentPage(number)

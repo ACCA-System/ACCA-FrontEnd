@@ -3,11 +3,11 @@ import clienteAxios from "../config/clienteAxios";
 import useAuth from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 
-
 const ACCAContext = createContext();
 
 const ACCAProvider = ({ children }) => {
   const [user, setUser] = useState({});
+  const [userToEdit, setUserToEdit] = useState({});
   const [users, setUsers] = useState([]);
   const [alerta, setAlert] = useState({});
   const { auth } = useAuth();
@@ -34,12 +34,16 @@ const ACCAProvider = ({ children }) => {
       setAlert({});
   };
 
+  const cleanUserToEdit = () => {
+    setUserToEdit({});
+  };
+
   const getUser = async (id) => {
     try {
       const config = getConfig();
       if (!config) return;
       const { data } = await clienteAxios.get(`/User/?userId=${id}`, config);
-      setUser(data);
+      setUserToEdit(data);
       setAlert({});
       navigate("/welcome/usersForm");
     } catch (error) {
@@ -52,13 +56,12 @@ const ACCAProvider = ({ children }) => {
         setAlert({});
       }, 1000);
     } 
-
   };
   const getUserData = async (id) => {
     try {
       const config = getConfig();
       if (!config) return;
-      const { data } = await clienteAxios.get(`/User/?id=${id}`, config);
+      const { data } = await clienteAxios.get(`/User/?userId=${id}`, config);
       setUser(data);
       setAlert({});
     } catch (error) {
@@ -84,7 +87,7 @@ const ACCAProvider = ({ children }) => {
   };
 
   const submitUser = async (user) => {
-    if (user.Id) {
+    if (user.userId) {
       await updateUser(user);
     } else {
       await newUser(user);
@@ -105,7 +108,8 @@ const ACCAProvider = ({ children }) => {
         navigate("/welcome/users");
       }, 1000);
     } catch (error) {
-    }
+      alert(error.request.responseText);
+        }
   };
   const updateUser = async (user) => {
     try {
@@ -123,7 +127,7 @@ const ACCAProvider = ({ children }) => {
       setTimeout(() => {
         setAlert({});
         getUsers();
-        navigate("/Users");
+        navigate("/welcome/users");
       }, 1000);
     } catch (error) {
     }
@@ -144,6 +148,13 @@ const ACCAProvider = ({ children }) => {
         getUsers();
       }, 1000);
     } catch (error) {
+      setAlert({
+        msg: error.response.data.msg,
+        error: true,
+      });
+      setTimeout(() => {
+        setAlert({});
+      }, 1000);
     }
   };
 
@@ -156,6 +167,7 @@ const ACCAProvider = ({ children }) => {
   return (
     <ACCAContext.Provider
       value={{
+        userToEdit,
         user,
         setUser,
         getUser,
@@ -168,6 +180,7 @@ const ACCAProvider = ({ children }) => {
         alerta,
         showAlert,
         closeSesion,
+        cleanUserToEdit,
       }}
     >
       {children}

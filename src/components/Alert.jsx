@@ -1,6 +1,6 @@
 const Alert = ({ alert }) => {
     return (
-        <div role="alert" className="alert alert-error mb-6">
+        <div role="alert" className="alert alert-error mb-6 animate-shake animate-twice animate-duration-100">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="stroke-current shrink-0 h-6 w-6"

@@ -4,11 +4,11 @@ import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import useACCA from "../hooks/useACCA";
 import { Player, Controls } from "@lottiefiles/react-lottie-player";
 
-export default function ModalConfirm({ open, setOpen, values }) {
+export default function ModalConfirm({ open, setOpen, values, error }) {
     const [showLottie, setShowLottie] = useState(false);
     const [buttonsDisabled, setButtonsDisabled] = useState(false);
     const { submitUser } = useACCA();
-    
+
     const cancelButtonRef = useRef(null);
 
     const handleConfirm = () => {
@@ -19,7 +19,8 @@ export default function ModalConfirm({ open, setOpen, values }) {
             setShowLottie(false);
             setOpen(false);
             setButtonsDisabled(false);
-        }, 3000);
+        }, 1000);
+
     };
 
     return (
@@ -87,13 +88,20 @@ export default function ModalConfirm({ open, setOpen, values }) {
                                                 as="h3"
                                                 className="text-base font-semibold leading-6 text-gray-900"
                                             >
-                                                Agregar usuario
+                                                Guardar usuario
                                             </Dialog.Title>
                                             <div className="mt-2">
-                                                <p className="text-sm text-gray-500">
-                                                    ¿Estás seguro de que quieres
-                                                    agregar este usuario?
-                                                </p>
+                                                {error ? (
+                                                    <p className="text-sm text-red-500">
+                                                        {error.message}
+                                                    </p>
+                                                ) : (
+                                                    <p className="text-sm text-gray-500">
+                                                        ¿Estás seguro de que
+                                                        quieres guardar los datos de este
+                                                        usuario?
+                                                    </p>
+                                                )}
                                             </div>
                                         </div>
                                     </div>
@@ -103,9 +111,9 @@ export default function ModalConfirm({ open, setOpen, values }) {
                                         type="button"
                                         className="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 sm:ml-3 sm:w-auto"
                                         onClick={handleConfirm}
-                                        disabled={buttonsDisabled} 
+                                        disabled={buttonsDisabled}
                                     >
-                                        Agregar
+                                        Guardar
                                     </button>
                                     <button
                                         className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
