@@ -1,14 +1,18 @@
 import { useState, useEffect, createContext } from "react";
 import clienteAxios from "../config/clienteAxios";
 import useAuth from "../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const ACCAContext = createContext();
 
 const ACCAProvider = ({ children }) => {
   const [user, setUser] = useState({});
+  const [userToEdit, setUserToEdit] = useState({});
   const [users, setUsers] = useState([]);
   const [alerta, setAlert] = useState({});
   const { auth } = useAuth();
+
+  const navigate = useNavigate();
 
   const getConfig = () => {
     const token = localStorage.getItem("token");
@@ -30,15 +34,20 @@ const ACCAProvider = ({ children }) => {
       setAlert({});
   };
 
+  const cleanUserToEdit = () => {
+    setUserToEdit({});
+  };
+
   const getUser = async (id) => {
     try {
       const config = getConfig();
       if (!config) return;
-      const { data } = await clienteAxios.get(`/User/?id=${id}`, config);
-      setUser(data);
+      const { data } = await clienteAxios.get(`/User/?userId=${id}`, config);
+      setUserToEdit(data);
       setAlert({});
+      navigate("/welcome/usersForm");
     } catch (error) {
-      navigate("/welcome");
+      navigate("/welcome/users");
       setAlert({
         msg: error.response.data.msg,
         error: true,
@@ -46,19 +55,16 @@ const ACCAProvider = ({ children }) => {
       setTimeout(() => {
         setAlert({});
       }, 1000);
-    } finally {
-      setLoading(false);
-    }
+    } 
   };
   const getUserData = async (id) => {
     try {
       const config = getConfig();
       if (!config) return;
-      const { data } = await clienteAxios.get(`/User/?id=${id}`, config);
+      const { data } = await clienteAxios.get(`/User/?userId=${id}`, config);
       setUser(data);
       setAlert({});
     } catch (error) {
-      navigate("/welcome");
       setAlert({
         msg: error.response.data.msg,
         error: true,
@@ -81,7 +87,7 @@ const ACCAProvider = ({ children }) => {
   };
 
   const submitUser = async (user) => {
-    if (user.Id) {
+    if (user.userId) {
       await updateUser(user);
     } else {
       await newUser(user);
@@ -99,10 +105,11 @@ const ACCAProvider = ({ children }) => {
       setTimeout(() => {
         setAlert({});
         getUsers();
-        navigate("/Users");
+        navigate("/welcome/users");
       }, 1000);
     } catch (error) {
-    }
+      alert(error.request.responseText);
+        }
   };
   const updateUser = async (user) => {
     try {
@@ -120,18 +127,18 @@ const ACCAProvider = ({ children }) => {
       setTimeout(() => {
         setAlert({});
         getUsers();
-        navigate("/Users");
+        navigate("/welcome/users");
       }, 1000);
     } catch (error) {
     }
   };
 
-  const deleteUser = async (user) => {
+  const deleteUser = async (userId) => {
     try {
       const config = getConfig();
       if (!config) return;
       const { data } = await clienteAxios.delete(
-        `/User/?userId=${user.userId}`, config);
+        `/User/?userId=${userId}`, config);
       setAlert({
         msg: data.msg,
         error: false,
@@ -139,9 +146,15 @@ const ACCAProvider = ({ children }) => {
       setTimeout(() => {
         setAlert({});
         getUsers();
-        navigate("/Users");
       }, 1000);
     } catch (error) {
+      setAlert({
+        msg: error.response.data.msg,
+        error: true,
+      });
+      setTimeout(() => {
+        setAlert({});
+      }, 1000);
     }
   };
 
@@ -154,6 +167,7 @@ const ACCAProvider = ({ children }) => {
   return (
     <ACCAContext.Provider
       value={{
+        userToEdit,
         user,
         setUser,
         getUser,
@@ -166,6 +180,7 @@ const ACCAProvider = ({ children }) => {
         alerta,
         showAlert,
         closeSesion,
+        cleanUserToEdit,
       }}
     >
       {children}

@@ -14,7 +14,6 @@ const SignIn = () => {
     const [password, setPassword] = useState("");
     const [alert, setAlert] = useState({});
 
-
     const navigate = useNavigate();
     
     const { setAuth } = useAuth();
@@ -92,7 +91,7 @@ const SignIn = () => {
                             {msg && <Alert alert={alert} />}
                             <Button
                                 type="submit"
-                                className="w-[163px] h-[50px] bg-pink-600 rounded-[56px] text-center text-white text-[15px] font-normal font-"
+                                className="w-[163px] h-[50px] bg-pink-600 rounded-[56px] text-center text-white text-[15px] font-normal "
                             >
                                 Ingresar
                             </Button>

@@ -4,22 +4,22 @@ import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import useACCA from "../hooks/useACCA";
 import { Player, Controls } from "@lottiefiles/react-lottie-player";
 
-export default function ModalDelete({ open, setOpen, userId }) {
-    const { deleteUser } = useACCA();
+export default function ModalConfirm({ open, setOpen, values, error }) {
     const [showLottie, setShowLottie] = useState(false);
     const [buttonsDisabled, setButtonsDisabled] = useState(false);
+    const { submitUser } = useACCA();
 
     const cancelButtonRef = useRef(null);
 
-    const handleDelete = () => {
+    const handleConfirm = () => {
         setButtonsDisabled(true);
-        deleteUser(userId);
         setShowLottie(true);
+        submitUser(values);
         setTimeout(() => {
             setShowLottie(false);
             setOpen(false);
             setButtonsDisabled(false);
-        }, 2000);
+        }, 1000);
     };
 
     return (
@@ -60,7 +60,8 @@ export default function ModalDelete({ open, setOpen, userId }) {
                                             <Player
                                                 autoplay
                                                 loop
-                                                src="https://lottie.host/a29e87d1-e677-44b0-a82b-b11e7eef84ca/6mUa64xAnG.json"
+                                                speed={1.6}
+                                                src="https://lottie.host/b9b0105b-798f-4337-8c5d-fea6b5111c4d/WTJjErSt1w.json"
                                                 className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10"
                                             >
                                                 <Controls
@@ -74,9 +75,9 @@ export default function ModalDelete({ open, setOpen, userId }) {
                                                 />
                                             </Player>
                                         ) : (
-                                            <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                                            <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10">
                                                 <ExclamationTriangleIcon
-                                                    className="h-6 w-6 text-red-600"
+                                                    className="h-6 w-6 text-green-600"
                                                     aria-hidden="true"
                                                 />
                                             </div>
@@ -86,16 +87,20 @@ export default function ModalDelete({ open, setOpen, userId }) {
                                                 as="h3"
                                                 className="text-base font-semibold leading-6 text-gray-900"
                                             >
-                                                Eliminar Usuario
+                                                Guardar usuario
                                             </Dialog.Title>
                                             <div className="mt-2">
-                                                <p className="text-sm text-gray-500">
-                                                    ¿Estás seguro de que quieres
-                                                    eliminar este usuario? Todos
-                                                    sus datos serán eliminados
-                                                    permanentemente. Esta acción
-                                                    no se puede deshacer.
-                                                </p>
+                                                {error ? (
+                                                    <p className="text-sm text-red-500">
+                                                        {error.message}
+                                                    </p>
+                                                ) : (
+                                                    <p className="text-sm text-gray-500">
+                                                        ¿Estás seguro de que
+                                                        quieres guardar los datos de este
+                                                        usuario?
+                                                    </p>
+                                                )}
                                             </div>
                                         </div>
                                     </div>
@@ -103,14 +108,13 @@ export default function ModalDelete({ open, setOpen, userId }) {
                                 <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                                     <button
                                         type="button"
-                                        className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
-                                        onClick={handleDelete}
-                                        disabled={buttonsDisabled} 
+                                        className="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 sm:ml-3 sm:w-auto"
+                                        onClick={handleConfirm}
+                                        disabled={buttonsDisabled}
                                     >
-                                        Eliminar
+                                        Guardar
                                     </button>
                                     <button
-                                        type="button"
                                         className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
                                         onClick={() => setOpen(false)}
                                         ref={cancelButtonRef}
