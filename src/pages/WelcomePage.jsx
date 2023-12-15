@@ -5,7 +5,7 @@ import { WelcomeCard } from '../components/WelcomeCard'
 
 export const WelcomePage = () => {
   return (
-        <div className='w-full h-scree flex items-center justify-center relative'>
+        <div className='w-full h-screen flex items-center justify-center relative'>
             <Header />
             <WelcomeCard />
             <Footer/>   
