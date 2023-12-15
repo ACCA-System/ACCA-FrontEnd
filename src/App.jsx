@@ -32,7 +32,7 @@ export const App = () => {
             <BrowserRouter>
                 <AuthProvider>
                     <ACCAProvider>
-                        <div className="bg-pink-500 pb-10">
+                        <div className="">
                             <Routes>
                                 <Route path="/" element={<AuthLayout />}>
                                     <Route index element={<LoginPage />} />
@@ -62,7 +62,6 @@ export const App = () => {
                                 <Route path="*" element={<NotFoundPage />} />
                             </Routes>
                         </div>
-                        <Footer />
                     </ACCAProvider>
                 </AuthProvider>
             </BrowserRouter>

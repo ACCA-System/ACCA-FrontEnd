@@ -26,7 +26,7 @@ const Header = () => {
     return (
         <Disclosure
             as="nav"
-            className="bg-white md:h-24 flex justify-center items-center"
+            className="bg-white md:h-24 flex justify-center items-center absolute inset-x-0 top-0 w-full"
         >
             {({ open }) => (
                 <>
